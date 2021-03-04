@@ -30,6 +30,7 @@ namespace Xadrez
 
         private void ColocarPecas()
         {
+            /*
             Tab.ColocarPeca(new Torre(Cor.Branca, Tab), new PosicaoXadrez('a', 1).ToPosicao());
             Tab.ColocarPeca(new Cavalo(Cor.Branca, Tab), new PosicaoXadrez('b', 1).ToPosicao());
             Tab.ColocarPeca(new Bispo(Cor.Branca, Tab), new PosicaoXadrez('c', 1).ToPosicao());
@@ -38,6 +39,9 @@ namespace Xadrez
             Tab.ColocarPeca(new Bispo(Cor.Branca, Tab), new PosicaoXadrez('f', 1).ToPosicao());
             Tab.ColocarPeca(new Cavalo(Cor.Branca, Tab), new PosicaoXadrez('g', 1).ToPosicao());
             Tab.ColocarPeca(new Torre(Cor.Branca, Tab), new PosicaoXadrez('h', 1).ToPosicao());
+            */
+            Tab.ColocarPeca(new Rei(Cor.Branca, Tab), new PosicaoXadrez('e', 1).ToPosicao());
+
         }
     }
 }
