@@ -18,12 +18,32 @@ namespace tabuleiro
             Tab = tab;
             QtdeMovimentos = 0;
         }
+        
+        public bool ExisteMovimentosPossiveis()
+        {
+            bool[,] mat = MovimentosPossiveis();
+            for (int i = 0; i < Tab.Linhas; i++)
+            {
+                for (int j = 0; j < Tab.Colunas; j++)
+                {
+                    if (mat[i, j])
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
 
         public void IncrementarQtdeMovimentos()
         {
             QtdeMovimentos++;
         }
 
+        public bool PodeMoverPara(Posicao p)
+        {
+            return MovimentosPossiveis()[p.Linha, p.Coluna];
+        }
         public abstract bool[,] MovimentosPossiveis();
     }
 }
