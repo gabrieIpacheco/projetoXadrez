@@ -45,7 +45,7 @@ namespace tabuleiro
             QtdeMovimentos--;
         }
 
-        public bool PodeMoverPara(Posicao p)
+        public bool MovimentoPossivel(Posicao p)
         {
             return MovimentosPossiveis()[p.Linha, p.Coluna];
         }
