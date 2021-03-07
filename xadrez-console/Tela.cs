@@ -63,7 +63,7 @@ namespace xadrez_console
             Console.Write("[");
             foreach (Peca obj in conjunto)
             {
-                Console.WriteLine(obj + ", ");
+                Console.Write(obj + ", ");
             }
             Console.Write("]");
         }
