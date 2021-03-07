@@ -2,11 +2,12 @@
 
 namespace Xadrez
 {
-    class Peao:Peca
+    class Peao : Peca
     {
-        public Peao(Cor cor, Tabuleiro tab) : base(cor, tab)
+        private PartidaXadrez Partida;
+        public Peao(Cor cor, Tabuleiro tab, PartidaXadrez partida) : base(cor, tab)
         {
-
+            Partida = partida;
         }
 
         private bool ExisteInimigo(Posicao pos)
@@ -52,6 +53,20 @@ namespace Xadrez
 
                 }
 
+                //#jogadaEspecial - en passant
+                if (Pos.Linha == 3)
+                {
+                    Posicao esquerda = new Posicao(Pos.Linha, Pos.Coluna - 1);
+                    if (Tab.PosicaoValida(esquerda) && ExisteInimigo(esquerda) && Tab.Peca(esquerda) == Partida.vulneravelEnPassant)
+                    {
+                        mat[esquerda.Linha - 1, esquerda.Coluna] = true;
+                    }
+                    Posicao direita = new Posicao(Pos.Linha, Pos.Coluna + 1);
+                    if (Tab.PosicaoValida(direita) && ExisteInimigo(direita) && Tab.Peca(direita) == Partida.vulneravelEnPassant)
+                    {
+                        mat[direita.Linha - 1, direita.Coluna] = true;
+                    }
+                }
             }
             else
             {
@@ -81,9 +96,23 @@ namespace Xadrez
                     mat[pos.Linha, pos.Coluna] = true;
 
                 }
+                //#jogadaEspecial - en passant
+                if (Pos.Linha == 4)
+                {
+                    Posicao esquerda = new Posicao(Pos.Linha, Pos.Coluna - 1);
+                    if (Tab.PosicaoValida(esquerda) && ExisteInimigo(esquerda) && Tab.Peca(esquerda) == Partida.vulneravelEnPassant)
+                    {
+                        mat[esquerda.Linha + 1, esquerda.Coluna] = true;
+                    }
+                    Posicao direita = new Posicao(Pos.Linha, Pos.Coluna + 1);
+                    if (Tab.PosicaoValida(direita) && ExisteInimigo(direita) && Tab.Peca(direita) == Partida.vulneravelEnPassant)
+                    {
+                        mat[direita.Linha + 1, direita.Coluna] = true;
+                    }
+                }
             }
 
-                return mat;
+            return mat;
         }
         public override string ToString()
         {
