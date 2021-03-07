@@ -141,6 +141,28 @@ namespace Xadrez
                 DesfazMovimento(origem, destino, pecaCapturada);
                 throw new TabuleiroException("Você não pode ficar em xeque!");
             }
+
+            Peca p = Tab.Peca(destino);
+            //#jogadaEspecial promocao
+            if(p is Peao)
+            {
+                if((p.Cor == Cor.Branca && destino.Linha == 0)||(p.Cor == Cor.Preta && destino.Linha == 7))
+                {
+                    p = Tab.RetirarPeca(destino);
+                    pecas.Remove(p);
+                    char choice;
+
+                    do { 
+                        Console.Write("Escolha a peca da promoção(D/B/C/T): ");
+                        choice = char.Parse(Console.ReadLine());
+                        
+                    } while (choice != 'd' && choice != 'b' && choice != 'c' && choice != 't');
+                    Peca novaPeca = Promocao(choice, p);
+                    Tab.ColocarPeca(novaPeca, destino);
+                    pecas.Add(novaPeca);
+                }
+            }
+
             if (EstaEmXeque(Adversaria(JogadorAtual)))
             {
                 Xeque = true;
@@ -159,7 +181,7 @@ namespace Xadrez
                 MudarJogador();
             }
 
-            Peca p = Tab.Peca(destino);
+            
             //#jogadaEspecial en passant
             if (p is Peao && (destino.Linha == origem.Linha - 2 || destino.Linha == origem.Linha + 2))
             {
@@ -170,7 +192,47 @@ namespace Xadrez
                 vulneravelEnPassant = null;
             }
         }
+        public Peca Promocao(char c, Peca p)
+        {
+            Peca aux;
+            switch (c)
+            {
+                
+                case 'd':
+                    aux = new Dama(p.Cor, Tab);
+                    return aux;
+                case 'D':
+                    aux = new Dama(p.Cor, Tab);
+                    return aux;
 
+                case 'b':
+                    aux = new Bispo(p.Cor, Tab);
+                    return aux;
+                case 'B':
+                    aux = new Bispo(p.Cor, Tab);
+                    return aux;
+
+                case 'c':
+                    aux = new Cavalo(p.Cor, Tab);
+                    return aux;
+                case 'C':
+                    aux = new Cavalo(p.Cor, Tab);
+                    return aux;
+
+                case 't':
+                    aux = new Torre(p.Cor, Tab);
+                    return aux;
+                case 'T':
+                    aux = new Torre(p.Cor, Tab);
+                    return aux;
+
+                default:
+                    throw new TabuleiroException("O jogo quebrou por favo reinicie!");
+                    
+            }
+
+            
+        }
         public void MudarJogador()
         {
             if (JogadorAtual == Cor.Branca)
